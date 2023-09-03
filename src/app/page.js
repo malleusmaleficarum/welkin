@@ -1,95 +1,127 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import Image from "next/image";
+import styles from "./page.module.css";
+import { easeIn, easeInOut, motion } from "framer-motion";
+
+const data = [
+  {
+    src: "/images/welkin_1.jpg",
+    title: "Emblems of Valour",
+  },
+  {
+    src: "/images/welkin_2.jpg",
+    title: "Will to Purification",
+  },
+  {
+    src: "/images/welkin_3.jpg",
+    title: "Recollections of Conquest and Honour ",
+  },
+];
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <>
+      {/* initial */}
+      <main className={styles.layer}>
+        <motion.div
+          className={styles.first}
+          initial={{ y: 0 }}
+          animate={{
+            y: "-100%",
+            transition: { duration: 1.3, ease: [0.5, 0, 0.75, 0], delay: 4 },
+          }}
+        >
+          <motion.div
+            className={styles["image-wrapper__1"]}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: { duration: 1.5, ease: easeIn },
+            }}
           >
-            By{' '}
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+              className={styles.img}
+              alt='First'
+              src='/images/first.png'
+              width={500}
+              height={100}
+              priority={true}
             />
-          </a>
+          </motion.div>
+        </motion.div>
+        <motion.div
+          className={styles.second}
+          initial={{ y: 0 }}
+          animate={{
+            y: "100%",
+            transition: { duration: 1.3, ease: [0.5, 0, 0.75, 0], delay: 4 },
+          }}
+        >
+          <motion.div
+            className={styles["image-wrapper__2"]}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: { duration: 1.5, ease: easeIn, delay: 1 },
+            }}
+          >
+            <Image
+              className={styles.img}
+              alt='First'
+              src='/images/second.png'
+              width={500}
+              height={100}
+              priority={true}
+            />
+          </motion.div>
+          <motion.h3
+            className={styles.title}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: { duration: 1.5, ease: easeIn, delay: 2 },
+            }}
+          >
+            208 BATTLE OF REDCLIFFS
+          </motion.h3>
+        </motion.div>
+      </main>
+
+      {/* main */}
+      <div className={styles.container}>
+        <div className={styles["image-wrapper"]}>
+          <Image
+            alt=''
+            src='/images/background.png'
+            width={1000}
+            height={100}
+            className={styles.img}
+          />
+        </div>
+        <div className={styles.wrapper}>
+          {data.map((map, i) => (
+            <motion.div
+              className={styles.card}
+              key={i}
+              initial={{ opacity: 0, y: i % 2 === 0 ? "30px" : "-30px" }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                transition: {
+                  duration: 1,
+                  ease: easeIn,
+                  delay: 5 + (i / 2 + 0.5),
+                },
+              }}
+            >
+              <div className={styles["card-image"]}>
+                <Image alt='' src={map.src} width={300} height={300} />
+              </div>
+              <h3 className={styles.title}>{map.title}</h3>
+            </motion.div>
+          ))}
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    </>
+  );
 }
